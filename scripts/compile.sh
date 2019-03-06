@@ -62,16 +62,16 @@ message "${PRE_MESSAGE}";
 
 # Clean out folder
 
-if [ "$CLEAN" == "yes" ]
+if [ "$NOCLEAN" == "yes" ]
 then
-  echo -e "${bldblu} Cleaning up the OUT folder. ${txtrst}"
-  rm -rf out
-
-  else
   echo -e "${bldblu} Removing existing images. ${txtrst}"
   rm out/arch/arm64/boot/Image.gz-dtb
   rm out/arch/arm64/boot/Image.gz
   rm out/arch/arm64/boot/Image
+
+  else
+  echo -e "${bldblu} Cleaning up the OUT folder. ${txtrst}"
+  rm -rf out
 fi
 
 # Setup ccache
