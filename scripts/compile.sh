@@ -127,7 +127,7 @@ then
 # If compilation failed
 else
    BUILD_RESULT="Compilation failed"
-   message " Kernel compilation, @AliHasan7671";
+   message " Kernel compilation failed, @AliHasan7671";
 fi
 
 # Back to root path
