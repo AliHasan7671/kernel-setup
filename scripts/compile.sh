@@ -128,6 +128,7 @@ then
 else
    BUILD_RESULT="Compilation failed"
    message " Kernel compilation failed, @AliHasan7671";
+   exit 1
 fi
 
 # Back to root path
