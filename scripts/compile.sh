@@ -8,25 +8,11 @@ cd ../jarvis
 
 ROOT_PATH=$PWD
 
-# Colorize and add text parameters
-red=$(tput setaf 1)             #  red
-grn=$(tput setaf 2)             #  green
-blu=$(tput setaf 4)             #  blue
-txtbld=$(tput bold)             #  bold
-bldgrn=${txtbld}$(tput setaf 1) #  bold red
-bldgrn=${txtbld}$(tput setaf 2) #  bold green
-bldblu=${txtbld}$(tput setaf 4) #  bold blue
-txtrst=$(tput sgr0)             #  reset
-
-
 # Start tracking time
 
-echo -e ${bldblu}
 echo -e "---------------------------------------"
 echo -e "SCRIPT STARTING AT $(date +%D\ %r)"
 echo -e "---------------------------------------"
-echo -e ${txtrst}
-
 START=$(date +%s)
 
 #TG message function
@@ -48,29 +34,28 @@ done
 
 # Environment
 export KBUILD_BUILD_USER=AliHasan7671
-export KBUILD_BUILD_HOST=Mark50
+export KBUILD_BUILD_HOST=Mark85
 TOOLCHAIN=~/kernel/toolchains/gcc-4.9/bin/aarch64-linux-android-
 export CROSS_COMPILE="${CCACHE} ${TOOLCHAIN}"
 export ARCH=arm64
 
 # Run it
-echo "Running ${THIS_WILL_BE_RUN}"
-eval ${THIS_WILL_BE_RUN}
+echo "Running ${RUN}"
+eval ${RUN}
 
-message "Starting kernel compilation at $(date +%Y%m%d) for ${DEVICE}. %0A[Progress URL]($BUILD_URL)."
-message "${PRE_MESSAGE}";
+message "Starting kernel compilation at $(date +%Y%m%d) for mido. %0A[Progress URL]($BUILD_URL)."
 
 # Clean out folder
 
 if [ "$NOCLEAN" == "yes" ]
 then
-  echo -e "${bldblu} Removing existing images. ${txtrst}"
+  echo -e " Removing existing images. "
   rm out/arch/arm64/boot/Image.gz-dtb
   rm out/arch/arm64/boot/Image.gz
   rm out/arch/arm64/boot/Image
 
   else
-  echo -e "${bldblu} Cleaning up the OUT folder. ${txtrst}"
+  echo -e " Cleaning up the OUT folder. "
   rm -rf out
 fi
 
@@ -86,7 +71,7 @@ fi
 
 # Start compilation
 
-echo -e "${bldblu} Starting compilation... ${txtrst}"
+echo -e " Starting compilation.... "
     make clean O=out/
 
     make mrproper O=out/
@@ -112,12 +97,12 @@ then
    size=$(du -sh $FINALZIP | awk '{print $1}')
    md5=$(md5sum $FINALZIP | awk '{print $1}' )
 
-   echo -e "${bldblu} Uploading ${txtrst}"
-   gdriveid=$(gdrive upload --parent 1H5llxFqCYVbda8uDB0sgNTZj1cVzVv5j ${FINALZIP} | tail -1 | awk '{print $2}')
+   echo -e " Uploading! "
+   gdriveid=$(gdrive upload --parent 1mdLiLw3Pv3cbIeRqTw9vgxfMlxCWMP-4 ${FINALZIP} | tail -1 | awk '{print $2}')
 
-   echo -e "${bldblu}Mirroring ${txtrst}"
-   sudo rm /var/www/mirror1.ialihasan.com/JARVIS*.zip
-   sudo cp $FINALZIP /var/www/mirror1.ialihasan.com/
+   echo -e " Mirroring! "
+   rm ~/mirror/JARVIS*.zip
+   cp $FINALZIP ~/mirror/
 #   scp -i ~/keys/sf $FINALZIP alihasan7671@web.sourceforge.net:/home/frs/project/mido-test-builds
 #   curl -u "$ncuser1:$ncpass1" --upload-file $FINALZIP ftp://198.54.114.241:21
 
@@ -136,11 +121,9 @@ cd $ROOT_PATH
 
 # Stop tracking time
 END=$(date +%s)
-echo -e ${bldblu}
 echo -e "-------------------------------------"
 echo -e "SCRIPT ENDING AT $(date +%D\ %r)"
 echo -e ""
 echo -e "${BUILD_RESULT}!"
 echo -e "TIME: $(echo $((${END}-${START})) | awk '{print int($1/60)" MINUTES AND "int($1%60)" SECONDS"}')"
 echo -e "-------------------------------------"
-echo -e ${txtrst}
