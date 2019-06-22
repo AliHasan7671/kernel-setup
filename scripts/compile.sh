@@ -2,7 +2,7 @@
 
 export TERM=xterm
 
-source ~/private/.credentials
+source ~/scripts/envstuff
 
 cd ../jarvis
 
@@ -17,10 +17,7 @@ START=$(date +%s)
 
 #TG message function
 
-if [ "$GROUP" == "yes" ]
-then
-export CHAT_ID="-1001191430908 $CHAT_ID";
-else
+if [ -z "$CHAT_ID" ]; then
 export CHAT_ID="348414952 $CHAT_ID";
 fi
 
@@ -28,7 +25,7 @@ function message()
 {
 for f in $CHAT_ID
 do
-bash ~/send_message.sh $f $@
+curl -s "https://api.telegram.org/bot${BOT_API}/sendmessage" --data "text=${*}&chat_id=$CHAT_ID&parse_mode=Markdown" > /dev/null
 done
 }
 
