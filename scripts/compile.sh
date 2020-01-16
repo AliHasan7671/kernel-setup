@@ -90,7 +90,7 @@ then
     cd ../zipit
     zip -r9 "JARVIS-mido-$(date +"%Y%m%d"-"%H%M").zip" *
 
-   FINALZIP="$(ls JARVIS-mido-2019*.zip)"
+   FINALZIP="$(ls JARVIS-mido-20*.zip)"
    size=$(du -sh $FINALZIP | awk '{print $1}')
    md5=$(md5sum $FINALZIP | awk '{print $1}' )
 
